@@ -5,6 +5,7 @@ from django.urls import reverse_lazy, reverse
 from django.views import generic as views
 
 from RentAll.accounts.forms import RentAllUserCreationForm, RentAllProfileChangePassword
+from RentAll.accounts.mixins import CheckForRegisteredUser, CheckForRestriction
 from RentAll.accounts.models import Profile
 
 UserModel = get_user_model()
@@ -24,7 +25,7 @@ class SignInUserView(auth_views.LoginView):
     redirect_authenticated_user = True
 
 
-class RegisterUserView(views.CreateView):
+class RegisterUserView(CheckForRegisteredUser, views.CreateView):
     template_name = 'accounts/register_user.html'
     form_class = RentAllUserCreationForm
     success_url = reverse_lazy("index")
@@ -49,15 +50,16 @@ class ProfileDetailsView(views.DetailView):
     template_name = "accounts/details_profile.html"
 
 
-class ProfileUpdateView(views.UpdateView):
+class ProfileUpdateView(CheckForRestriction, views.UpdateView):
     queryset = Profile.objects.all()
     template_name = "accounts/edit_profile.html"
-    fields = ("first_name", "last_name", "date_of_birth", "profile_picture")
+    fields = ("first_name", "last_name", "date_of_birth", "phone_number", "profile_picture",)
 
     def get_success_url(self):
         return reverse("detail profile", kwargs={
             "pk": self.object.pk,
         })
+
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class=form_class)

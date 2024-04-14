@@ -1,114 +1,95 @@
-{% include 'header.html' %}
+{% extends 'base.html' %}
 {% load static %}
-{% load filters %}
+{% block main_content %}
 
-<div class="container-fluid page-header mb-5 p-0" style="background-image: url({% static 'images/banner.jpg' %});">
-    <div class="container-fluid page-header-inner py-5">
-        <div class="container text-center">
-            <h1 class="display-3 text-white mb-3 animated slideInDown">{{ profile.user.email }}'s PROFILE</h1>
+    <div class="container-fluid page-header mb-5 p-0" style="background-image: url({% static 'images/banner.jpg' %});">
+        <div class="container-fluid page-header-inner py-5">
+            <div class="container text-center">
+                {% if profile.last_name %}
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">{{ profile.first_name }}'s Profile</h1>
+                {% else %}
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">{{ profile.user.email }}'s Profile</h1>
+                {% endif %}
+            </div>
         </div>
     </div>
-</div>
 
-<section class="vh-100" style="background-color: #28282B;">
-    <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col col-xl-10">
-                <div class="card" style="border-radius: 1rem;">
-                    <div class="row g-0">
-                        <div class="col-md-6 col-lg-5 d-none d-md-block">
-                            {% if object.profile_picture %}
-                            <img src="{{ object.profile_picture }}" alt="Profile Picture"/>
-                            {% else %}
-                            <img src="{% static 'images/user.jpg' %}" alt="Default Profile Picture"/>
-                            {% endif %}
-                        </div>
-                        <div class="col-md-6 col-lg-7 d-flex align-items-center">
-                            <div class="card-body p-4 p-lg-5 text-black">
-                                <div class="d-flex align-items-center mb-3 pb-1">
-                                    <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
-                                    <span class="h1 fw-bold mb-0">RentAll</span>
-                                </div>
-                                <div class="col-md-10">
-                                    <div class="wow fadeInUp" data-wow-delay="0.2s">
-                                        <h1>User Data</h1>
-                                        <div class="row g-3">
-                                            <div class="col-md-6 form-control">
-                                                <div class="form-floating">
-                                                    <h3>Username: {{ profile.user.email }}</h3>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 form-control">
-                                                <div class="form-floating">
-                                                    <h3>First Name: {{ object.first_name }}</h3>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 form-control">
-                                                <div class="form-floating">
-                                                    <h3>Last Name: {{ object.last_name }}</h3>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 form-control">
-                                                <div class="form-floating">
-                                                    <h3>Email: {{ profile.user.email }}</h3>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 form-control">
-                                                <div class="form-floating">
-                                                    <h3>Phone Number: {{ object.phone_number }}</h3>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 form-control">
-                                                <div class="form-floating">
-                                                    <h3>Date Of Birth: {{ object.date_of_birth }}</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mt-3">
-                                            {% if request.user.is_superuser or request.user.pk == object.pk %}
-                                            <div class="col-md-6">
-                                                <button class="btn btn-secondary rounded-pill w-100 py-3">
-                                                    <a href="{% url 'edit profile' pk=object.pk %}" style="color: whitesmoke">
-                                                        Edit Profile
-                                                    </a>
-                                                </button>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <button class="btn btn-danger rounded-pill w-100 py-3" data-toggle="modal" data-target="#deleteProfileModal">
-                                                    Delete Profile
-                                                </button>
-                                            </div>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+    <body>
+    <div class="container">
+        <div class="card profile-details">
+            <div class="card-header">
+                <h2>User Profile Details</h2>
+            </div>
+            <div class="card-body">
+                <div class="profile-picture">
+                    {% if profile.profile_picture %}
+                        <img src="{{ profile.profile_picture.url }}" alt="Profile Picture"/>
+                    {% else %}
+                        <img src="{% static 'images/user.jpg' %}" alt="Default Profile Picture"/>
+                    {% endif %}
+                </div>
+                <p><strong>First Name:</strong> {{ profile.first_name }}</p>
+                <p><strong>Last Name:</strong> {{ profile.last_name }}</p>
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Phone Number:</strong> {{ profile.phone_number }}</p>
+                <p><strong>Date of Birth:</strong> {{ profile.date_of_birth }}</p>
+            </div>
+            <div class="card-footer">
+                {% if user == profile.user or request.user.is_superuser %}
+                    <a href="{% url 'edit profile' pk=profile.user.pk %}" class="btn btn-primary">Edit Profile</a>
+                    <a href="{% url 'delete profile' pk=profile.user.pk %}" class="btn btn-danger">Delete Profile</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card-footer">
+            <h3>User's Offers</h3>
+
+            <div class="card-deck">
+                {% for car in profile.user.car_owner.all %}
+                    <div class="card">
+                        <img src="{{ car.vehicle_image.url }}" class="card-img-top small-image" alt="{{ car.brand }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ car.brand }} - {{ car.model }}</h5>
+                             <a href="{% url 'car detail' pk=car.pk %}" class="btn btn-primary">Offer
+                                    Details</a>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+                {% endfor %}
 
-<div class="modal fade" id="deleteProfileModal" tabindex="-1" aria-labelledby="deleteProfileModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteProfileModalLabel">Delete Profile</h5>
-                <button type="button" class="btn-close align-top" data-dismiss="modal" aria-label="Close"></button>
+                {% for van in profile.user.van_owner.all %}
+                    <div class="card">
+                        <img src="{{ van.vehicle_image.url }}" class="card-img-top small-image" alt="{{ van.brand }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ van.brand }} - {{ van.model }}</h5>
+                                <a href="{% url 'van detail' pk=van.pk %}" class="btn btn-primary">Offer
+                                    Details</a>
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+                {% for campers_caravans in profile.user.campers_caravans_owner.all %}
+                    <div class="card">
+                        <img src="{{ campers_caravans.vehicle_image.url }}" class="card-img-top small-image"
+                             alt="{{ campers_caravans.brand }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ campers_caravans.brand }} - {{ campers_caravans.model }}</h5>
+                             <a href="{% url 'cam_car detail' pk=campers_caravans.pk %}" class="btn btn-primary">Offer
+                                    Details</a>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-            <div class="modal-body">
-                Are you sure you want to delete your profile?
-            </div>
-            <div class="modal-footer d-flex justify-content-center">
-                <button type="button" class="btn btn-secondary me-2" data-dismiss="modal">Close</button>
-                <form method="post" action="{% url 'delete profile' pk=object.pk %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger ms-2">Delete</button>
-                </form>
-            </div>
+
+
+            {% if not profile.user.car_owner.exists and not profile.user.van_owner.exists and not profile.user.campers_caravans_owner.exists %}
+                <p>This user does not have any offers yet.</p>
+            {% endif %}
         </div>
     </div>
-</div>
-{% include 'footer.html' %}
+    </body>
+
+{% endblock %}

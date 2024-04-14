@@ -64,6 +64,7 @@ class Vehicle(models.Model):
     )
 
     vehicle_image = models.ImageField(
+        upload_to='vehicle_images',
         blank=False,
         null=False,
     )
@@ -76,11 +77,18 @@ class Vehicle(models.Model):
         null=False,
     )
 
-    owner = models.ForeignKey(
-        RentAllUser,
-        on_delete=models.CASCADE,
-
+    city = models.CharField(
+        max_length=30,
+        blank=False,
+        null=False,
     )
+
+    published = models.DateTimeField(
+        auto_now_add=True,
+        null=False,
+        blank=False,
+    )
+
 
     class Meta:
         abstract = True
@@ -103,11 +111,27 @@ class Car(Vehicle):
         null=False,
     )
 
+    owner = models.ForeignKey(
+        RentAllUser,
+        on_delete=models.CASCADE,
+        related_name='car_owner',
+        blank=True,
+        null=True,
+    )
+
 
 class Van(Vehicle):
     payload_weight = models.PositiveIntegerField(
         blank=False,
         null=False,
+    )
+
+    owner = models.ForeignKey(
+        RentAllUser,
+        on_delete=models.CASCADE,
+        related_name='van_owner',
+        blank=True,
+        null=True,
     )
 
 
@@ -116,15 +140,23 @@ class CampersCaravans(Vehicle):
     MIN_BRAND_LENGTH = 2
     MAX_TYPE_LENGTH = 10
     TYPE_CHOICES = (
-        ('caravan', 'Caravan'),
-        ('camper', 'Camper'),
+        ('CARAVAN', 'CARAVAN'),
+        ('CAMPER', 'CAMPER'),
     )
 
-    vehicle_type = models.CharField(
+    type = models.CharField(
         max_length=MAX_TYPE_LENGTH,
         choices=TYPE_CHOICES,
         blank=False,
         null=False,
+    )
+
+    owner = models.ForeignKey(
+        RentAllUser,
+        on_delete=models.CASCADE,
+        related_name='campers_caravans_owner',
+        blank=True,
+        null=True,
     )
 
 
