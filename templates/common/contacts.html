@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block main_content %}
+     <div class="container-fluid page-header mb-5 p-0" style="background-image: url({% static 'images/banner.jpg' %});">
+        <div class="container-fluid page-header-inner py-5">
+            <div class="container text-center">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">Contact Us</h1>
+            </div>
+        </div>
+    </div>
+    <section class="contact_us">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Contact Information</h2>
+                    <div class="contact-info-container">
+                        <ul class="contact-info">
+                            <li><i class="fa fa-map-marker"></i> 1 Osvoboditel, Sofia, Bulgaria</li>
+                            <li><i class="fa fa-phone"></i> +359888000000</li>
+                            <li><i class="fa fa-envelope"></i> rentall@gmail.com</li>
+                            <li><i class="fa fa-github"></i> <a href="https://github.com/alexander-argirov">Alexander Argirov</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h2>Location</h2>
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2933.331496801085!2d23.32186731548658!3d42.69770897916353!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40aa8670e212100f%3A0xe80f331aa29b5b93!2sSofia%2C%20Bulgaria!5e0!3m2!1sen!2sbg!4v1650483154544!5m2!1sen!2sbg" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main_content %}
+    <div class="container-fluid page-header mb-5 p-0"
+         style="background-image: url({% static 'images/banner.jpg' %});"
+         alt="Rent Offers Banner Image">
+        <div class="container-fluid page-header-inner py-5">
+            <div class="container text-center">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">Rent Offers</h1>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container-xxl py-5" style="background-color: #f8f9fa;">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="d-flex py-5 px-4">
+                        <img src="{% static 'images/auto_car-16.jpg' %}" alt="Your Image" class="img-fluid me-4"
+                             style="max-width: 47px;">
+                        <div class="ps-4">
+                            <h5 class="mb-3">Cars</h5>
+                            <p>Find your car!</p>
+                            <button style="background-color: yellow; color: black;"><a
+                                    href="{% url 'cars list' %}">See All Cars</a></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="d-flex py-5 px-4">
+                        <img src="{% static 'images/van2.jpg' %}" alt="Your Image" class="img-fluid me-4"
+                             style="max-width: 47px;">
+                        <div class="ps-4">
+                            <h5 class="mb-3">Vans</h5>
+                            <p>Find your van!</p>
+                            <button style="background-color: yellow; color: black;"><a href="{% url 'vans list' %}">See All Vans</a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="d-flex py-5 px-4">
+                        <img src="{% static 'images/Caravan-logo.png' %}" alt="Your Image" class="img-fluid me-4"
+                             style="max-width: 47px;">
+                        <div class="ps-4">
+                            <h5 class="mb-3">Campers and Caravans</h5>
+                            <p>Find your camper or caravan!</p>
+                            <button style="background-color: yellow; color: black;"><a href="{% url 'campers and caravans list' %}">See All Campers and
+                                Caravans</a></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+{% endblock %}

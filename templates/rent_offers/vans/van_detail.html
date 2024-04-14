@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main_content %}
+    <style>
+        body {
+            background-color: #f2f2f2;
+        }
+
+        .car-details {
+            margin-top: 50px;
+        }
+    </style>
+
+    <body>
+    <div class="container">
+        <div class="card car-details">
+            <div class="card-header">
+                <h2>{{ van.brand }} {{ van.model }}</h2>
+            </div>
+            <div class="card-body">
+                {% if object.vehicle_image %}
+                    <img src="{{ object.vehicle_image.url }}"/>
+                {% else %}
+                    <img src="{% static 'images/car_img1.png' %}"/>
+                {% endif %}
+                <p><strong>Type of Engine:</strong> {{ van.get_type_of_engine_display }}</p>
+                <p><strong>Type of Gear:</strong> {{ van.get_type_of_gear_display }}</p>
+                <p><strong>Year:</strong> {{ van.first_registration }}</p>
+                <p><strong>Seats:</strong> {{ van.seats }}</p>
+                <p><strong>Payload Weight:</strong> {{ van.payload_weight }} kg.</p>
+                <p><strong>Price Per Day:</strong> {{ van.price }} lv.</p>
+                <p><strong>City:</strong> {{ van.city }}</p>
+                <p><strong>Published:</strong> {{ van.published }}</p>
+                <p><strong>Owner:</strong> {{ van.owner }}</p>
+                <p><strong>Phone number:</strong> {{ van.owner.profile.phone_number }}</p>
+                <a href="{% url 'detail profile' pk=van.owner.pk %}" class="btn btn-primary owner-profile-button">See Profile</a>
+                {% if user == van.owner or request.user.is_superuser %}
+                    <a href="{% url 'edit van' pk=van.pk %}" class="btn btn-warning edit-button">Edit Offer</a>
+                {% endif %}
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'common offers view' %}" class="btn btn-secondary">Back to Offers</a>
+            </div>
+        </div>
+    </div>
+    </body>
+    </html>
+{% endblock %}

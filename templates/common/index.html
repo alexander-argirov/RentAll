@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block main_content %}
+    <body class="main-layout">
+    <section class="banner_main">
+        <div class="container">
+            <div class="row d_flex">
+                <div class="col-md-12">
+                    <div class="text-bg">
+                        <h1>Find best car Here For rent</h1>
+                        <strong>Free Multipurpose Responsive</strong>
+                        <span>Landing Page 2019</span>
+                        <p>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                            been the industry's standard dummy text ever since theLorem Ipsum is simply dummy text of
+                            the printing
+                            <head></head>
+                        </p>
+                        <a href="#">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </div>
+    <!-- end banner -->
+    <!-- car -->
+    <div class="car">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="titlepage">
+                        <h2>VARIETY OF VEHICLES</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 padding_leri">
+                    <div class="card">
+                        <img src="{% static 'images/9540__M1.jpg' %}" alt="#" class="card-img-top">
+                        <div class="card-body">
+                            <br>
+                            <a href="{% url 'vans list' %}" class="btn btn-primary btn-block btn-lg mt-3">Vans</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 padding_leri">
+                    <div class="card">
+                        <br>
+                        <br>
+                        <img src="{% static 'images/mercedes.png' %}" alt="#" class="card-img-top">
+                        <div class="card-body">
+                            <br>
+                            <a href="{% url 'cars list' %}" class="btn btn-primary btn-block btn-lg mt-3">Cars</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 padding_leri">
+                    <div class="card">
+                        <br>
+                        <img src="{% static 'images/camperpng.png' %}" alt="#" class="card-img-top">
+                        <div class="card-body">
+                             <a href="{% url 'campers and caravans list' %}" class="btn btn-primary btn-block btn-lg mt-3">Campers And Caravans</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    </body>
+{% endblock %}

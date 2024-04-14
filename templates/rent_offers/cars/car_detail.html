@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main_content %}
+    <style>
+        body {
+            background-color: #f2f2f2;
+        }
+
+        .car-details {
+            margin-top: 50px;
+        }
+
+        .owner-profile-button {
+            margin-top: 10px;
+        }
+
+        .edit-button {
+            margin-top: 10px;
+        }
+    </style>
+
+    <body>
+    <div class="container">
+        <div class="card car-details">
+            <div class="card-header">
+                <h2>{{ car.brand }} {{ car.model }}</h2>
+            </div>
+            <div class="card-body">
+                {% if object.vehicle_image %}
+                    <img src="{{ object.vehicle_image.url }}"/>
+                {% else %}
+                    <img src="{% static 'images/car_img1.png' %}"/>
+                {% endif %}
+                <p><strong>Type of Engine:</strong> {{ car.get_type_of_engine_display }}</p>
+                <p><strong>Type of Gear:</strong> {{ car.get_type_of_gear_display }}</p>
+                <p><strong>Year:</strong> {{ car.first_registration }}</p>
+                <p><strong>Seats:</strong> {{ car.seats }}</p>
+                <p><strong>Price Per Day:</strong> {{ car.price }}</p>
+                <p><strong>City:</strong> {{ car.city }}</p>
+                <p><strong>Published:</strong> {{ car.published }}</p>
+                <p><strong>Owner:</strong> {{ car.owner }}</p>             
+                <p><strong>Phone number:</strong> {{ car.owner.profile.phone_number }}</p>
+                <a href="{% url 'detail profile' pk=car.owner.pk %}" class="btn btn-primary owner-profile-button">See Profile</a>
+                {% if user == car.owner or request.user.is_superuser %}
+                    <a href="{% url 'edit car' pk=car.pk %}" class="btn btn-warning edit-button">Edit Offer</a>
+                {% endif %}
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'common offers view' %}" class="btn btn-secondary">Back to Offers</a>
+            </div>
+        </div>
+    </div>
+    </body>
+{% endblock %}

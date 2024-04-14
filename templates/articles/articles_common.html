@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main_content %}
+    <div class="container-fluid page-header mb-5 p-0"
+         style="background-image: url({% static 'images/banner.jpg' %});"
+         alt="Rent Offers Banner Image">
+        <div class="container-fluid page-header-inner py-5">
+            <div class="container text-center">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">ARTICLES</h1>
+                {% if request.user.is_staff or request.user.is_superuser %}
+                    <button class="btn btn-success rounded-pill text-center">
+                        <a href="{% url 'add article view' %}" style="color: whitesmoke">
+                            CREATE ARTICLE
+                        </a>
+                    </button>
+                {% endif %}
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center text-uppercase">
+                        <li class="breadcrumb-item"><a href="{% url 'list news view' %}">News</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'list advices view' %}">Advices</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    
+    <div class="fullscreen-container py-5" style="background-color: #f8f9fa;">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md wow fadeInUp" data-wow-delay="0.1s">
+                <h1 class="mb-3">News</h1>
+                <div class="ps-4">
+                    {% for article in news_list %}
+                    <div class="d-flex py-3">
+                        <img src="{{ article.article_image.url }}" alt="{{ article.title }}"
+                             class="img-fluid me-4" style="max-width: 100px;">
+                        <div>
+                            <h6>{{ article.title }}</h6>
+                            <p>{{ article.sub_title }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <button style="background-color: yellow; color: black;"><a
+                            href="{% url 'list news view' %}">See All News</a></button>
+                </div>
+            </div>
+            <div class="col-md wow fadeInUp" data-wow-delay="0.2s">
+                <h1 class="mb-3">Advices</h1>
+                <div class="ps-4">
+                    {% for article in advices_list %}
+                    <div class="d-flex py-3">
+                        <img src="{{ article.article_image.url }}" alt="{{ article.title }}"
+                             class="img-fluid me-4" style="max-width: 47px;">
+                        <div>
+                            <h6>{{ article.title }}</h6>
+                            <p>{{ article.sub_title }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <button style="background-color: yellow; color: black;"><a
+                            href="{% url 'list advices view' %}">See All Advices</a></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

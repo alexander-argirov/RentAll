@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block main_content %}
+
+    <div class="container">
+        <h1>{{ object.title }}</h1>
+        <img src="{{ object.article_image.url }}" alt="Article Image">
+        <p>{{ object.description }}</p>
+        <p><strong>Author:</strong> {{ object.author }}</p>
+        <p><strong>Published:</strong> {{ object.published }}</p>
+        {% if request.user.is_superuser or request.user.is_staff %}
+            <a href="{% url 'edit article view' pk=object.pk %}" class="btn btn-primary">Edit</a>
+            <br>
+        {% endif %}
+        <a href="javascript:history.back()" class="btn btn-secondary">Back</a>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main_content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Car</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card car-edit-form">
+            <div class="card-header">
+                <h2>Edit Offer</h2>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for field_name in form %}
+                        {% if field_name.name in form.fields %}
+                            <div class="form-group">
+                                <label for="{{ field_name.id_for_label }}" class="form-label">{{ field_name.label }}</label>
+                                {{ field_name }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    {% if request.user.is_superuser or request.user == car.owner %}
+                        <a href="{% url 'delete car' pk=car.pk %}" class="btn btn-danger">Delete Offer</a>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

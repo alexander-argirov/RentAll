@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main_content %}
+     <div class="container-fluid page-header mb-5 p-0" style="background-image: url({% static 'images/banner.jpg' %});">
+        <div class="container-fluid page-header-inner py-5">
+            <div class="container text-center">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">Our Campers And Vans For Rent</h1>
+                <a href="{% url 'create cam_car' %}" class="btn btn-success">Create Offer</a>
+            </div>
+        </div>
+    </div>
+       <div class="container">
+        {% if object_list %}
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                {% for campers_caravans in object_list %}
+                    <div class="col">
+                        <div class="card">
+                            {% if campers_caravans.vehicle_image %}
+                                <img src="{{ campers_caravans.vehicle_image.url }}" class="card-img-top" alt="Campers and Caravans Image">
+                            {% else %}
+                                <img src="{% static 'images/car_img1.png' %}" class="card-img-top" alt="Campers and Caravans Image">
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ campers_caravans.brand }} {{ car.model }}</h5>
+                                <p class="card-text">Year: {{ campers_caravans.first_registration }}</p>
+                                <p class="card-text">Price Per Day: {{ campers_caravans.price }} lv.</p>
+                                <p class="card-text">City: {{ campers_caravans.city }}</p>
+                                <a href="{% url 'cam_car detail' pk=campers_caravans.pk %}" class="btn btn-primary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% if is_paginated %}
+                <div class="row justify-content-center mt-4">
+                    <div class="col-auto">
+                        {% if page_obj.has_previous %}
+                            <a href="?page=1" class="btn btn-outline-primary">First</a>
+                            <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary">Previous</a>
+                        {% endif %}
+                        <span class="mx-2">
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                        </span>
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary">Next</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-primary">Last</a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="alert alert-info" role="alert">
+                There are no campers or caravans offers available at the moment.
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
