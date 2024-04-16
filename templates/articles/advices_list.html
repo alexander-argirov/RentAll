@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block main_content %}
+    <style>
+        .card-img-top {
+            width: 500px; 
+            height: 300px; 
+            object-fit: cover; 
+        }
+    </style>
     <div class="container-fluid page-header mb-5 p-0" style="background-image: url({% static 'images/banner.jpg' %});">
         <div class="container-fluid page-header-inner py-5">
             <div class="container text-center">
@@ -17,12 +24,10 @@
                             <img src="{{ article.article_image.url }}" class="card-img-top" alt="Advice Image">
                             <div class="card-body">
                                 <h5 class="card-title">{{ article.title }}</h5>
-                                <p class="card-text">Title: {{ article.sub_title }} </p>
-                                <p class="card-text">Author: {{ article.author }} </p>
+                                <p class="card-text">Title: {{ article.sub_title }}</p>
+                                <p class="card-text">Author: {{ article.author }}</p>
                                 <p class="card-text">Published: {{ article.published }}</p>
-
-                                <a href="{% url 'detail article view' pk=article.pk %}" class="btn btn-primary">Read
-                                    More</a>
+                                <a href="{% url 'detail article view' pk=article.pk %}" class="btn btn-primary">Read More</a>
                             </div>
                         </div>
                     </div>

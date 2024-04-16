@@ -5,7 +5,11 @@
         <div class="container-fluid page-header-inner py-5">
             <div class="container text-center">
                 <h1 class="display-3 text-white mb-3 animated slideInDown">Our Campers And Vans For Rent</h1>
-                <a href="{% url 'create cam_car' %}" class="btn btn-success">Create Offer</a>
+                 {% if request.user.is_authenticated %}
+                    <a href="{% url 'create cam_car' %}" class="btn btn-success">Create Offer</a>
+                {% else %}
+                    <a href="{% url 'signin user' %}" class="btn btn-success">Create Offer</a>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -16,9 +20,9 @@
                     <div class="col">
                         <div class="card">
                             {% if campers_caravans.vehicle_image %}
-                                <img src="{{ campers_caravans.vehicle_image.url }}" class="card-img-top" alt="Campers and Caravans Image">
+                                <img src="{{ campers_caravans.vehicle_image.url }}" style="width: 200px; height: 150px;" alt="Campers and Caravans Image">
                             {% else %}
-                                <img src="{% static 'images/car_img1.png' %}" class="card-img-top" alt="Campers and Caravans Image">
+                                <img src="{% static 'images/camperpng.png' %}" style="width: 200px; height: 150px;" alt="Campers and Caravans Image">
                             {% endif %}
                             <div class="card-body">
                                 <h5 class="card-title">{{ campers_caravans.brand }} {{ car.model }}</h5>

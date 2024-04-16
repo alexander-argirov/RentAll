@@ -4,6 +4,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
 from django.views import generic as views
 
+
 from RentAll.accounts.forms import RentAllUserCreationForm, RentAllProfileChangePassword
 from RentAll.accounts.mixins import CheckForRegisteredUser, CheckForRestriction
 from RentAll.accounts.models import Profile
@@ -28,13 +29,15 @@ class SignInUserView(auth_views.LoginView):
 class RegisterUserView(CheckForRegisteredUser, views.CreateView):
     template_name = 'accounts/register_user.html'
     form_class = RentAllUserCreationForm
-    success_url = reverse_lazy("index")
 
     def form_valid(self, form):
         result = super().form_valid(form)
         login(self.request, form.instance)
 
         return result
+
+    def get_success_url(self):
+        return reverse_lazy('edit profile', kwargs={'pk': self.object.pk})
 
 
 def signout_user(request):
@@ -59,7 +62,6 @@ class ProfileUpdateView(CheckForRestriction, views.UpdateView):
         return reverse("detail profile", kwargs={
             "pk": self.object.pk,
         })
-
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class=form_class)

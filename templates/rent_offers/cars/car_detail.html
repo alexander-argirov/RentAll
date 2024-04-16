@@ -29,13 +29,13 @@
                 {% if object.vehicle_image %}
                     <img src="{{ object.vehicle_image.url }}"/>
                 {% else %}
-                    <img src="{% static 'images/car_img1.png' %}"/>
+                    <img src="{% static 'images/car1.png' %}"/>
                 {% endif %}
                 <p><strong>Type of Engine:</strong> {{ car.get_type_of_engine_display }}</p>
                 <p><strong>Type of Gear:</strong> {{ car.get_type_of_gear_display }}</p>
                 <p><strong>Year:</strong> {{ car.first_registration }}</p>
                 <p><strong>Seats:</strong> {{ car.seats }}</p>
-                <p><strong>Price Per Day:</strong> {{ car.price }}</p>
+                <p><strong>Price Per Day:</strong> {{ car.price }} lv.</p>
                 <p><strong>City:</strong> {{ car.city }}</p>
                 <p><strong>Published:</strong> {{ car.published }}</p>
                 <p><strong>Owner:</strong> {{ car.owner }}</p>             

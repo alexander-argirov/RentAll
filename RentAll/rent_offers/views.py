@@ -1,11 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import generic as views
-
+from django.contrib import messages
 from .models import Car, Van, CampersCaravans
 from .forms import CarForm, VanForm, CampersCaravansForm
+from ..accounts.mixins import ProfileCompletenessMixin
 from ..accounts.models import Profile
 
 
@@ -56,7 +57,7 @@ class CarListView(views.ListView):
         return context
 
 
-class CarCreateOfferView(views.CreateView):
+class CarCreateOfferView(ProfileCompletenessMixin, views.CreateView):
     model = Car
     form_class = CarForm
     template_name = 'rent_offers/cars/create_car.html'
@@ -129,7 +130,7 @@ class VanListView(views.ListView):
         return context
 
 
-class VanCreateOfferView(views.CreateView):
+class VanCreateOfferView(ProfileCompletenessMixin, views.CreateView):
     model = Van
     form_class = VanForm
     template_name = 'rent_offers/vans/create_van.html'
@@ -202,7 +203,7 @@ class CamperCaravanListView(views.ListView):
         return context
 
 
-class CamperCaravanCreateOfferView(views.CreateView):
+class CamperCaravanCreateOfferView(ProfileCompletenessMixin, views.CreateView):
     model = CampersCaravans
     form_class = CampersCaravansForm
     template_name = 'rent_offers/campers_caravans/create_campers_caravans.html'

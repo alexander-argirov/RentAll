@@ -32,7 +32,6 @@ class NewsListView(views.ListView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['search_news'] = SearchArticleForm(self.request.GET)
         return data
 
 
@@ -89,3 +88,4 @@ class ArticleDeleteView(CheckUserArticlePermission, views.DeleteView):
     model = ArticlesModel
     form_class = DeleteArticleForm
     success_url = reverse_lazy('common articles views')
+

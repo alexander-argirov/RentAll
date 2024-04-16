@@ -21,7 +21,7 @@
                 {% if object.vehicle_image %}
                     <img src="{{ object.vehicle_image.url }}"/>
                 {% else %}
-                    <img src="{% static 'images/car_img1.png' %}"/>
+                    <img src="{% static 'images/camper.jpg' %}"/>
                 {% endif %}
                 <p><strong>Type of Engine:</strong> {{ campers_caravans.get_type_of_engine_display }}</p>
                 <p><strong>Type of Gear:</strong> {{ campers_caravans.get_type_of_gear_display }}</p>

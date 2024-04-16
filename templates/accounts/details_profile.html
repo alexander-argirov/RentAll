@@ -18,14 +18,19 @@
     <div class="container">
         <div class="card profile-details">
             <div class="card-header">
-                <h2>User Profile Details</h2>
+                {% if profile.full_name %}
+                    <h2>{{ profile.full_name }}</h2>
+                {% else %}
+                    <h2>{{ profile.user.email }}</h2>
+                {% endif %}
             </div>
             <div class="card-body">
                 <div class="profile-picture">
                     {% if profile.profile_picture %}
                         <img src="{{ profile.profile_picture.url }}" alt="Profile Picture"/>
                     {% else %}
-                        <img src="{% static 'images/user.jpg' %}" alt="Default Profile Picture"/>
+                        <img src="{% static 'images/user.jpg' %}" alt="Default Profile Picture" width="300"
+                             height="300">
                     {% endif %}
                 </div>
                 <p><strong>First Name:</strong> {{ profile.first_name }}</p>
@@ -33,6 +38,7 @@
                 <p><strong>Email:</strong> {{ user.email }}</p>
                 <p><strong>Phone Number:</strong> {{ profile.phone_number }}</p>
                 <p><strong>Date of Birth:</strong> {{ profile.date_of_birth }}</p>
+            </div>
             </div>
             <div class="card-footer">
                 {% if user == profile.user or request.user.is_superuser %}
@@ -50,22 +56,24 @@
             <div class="card-deck">
                 {% for car in profile.user.car_owner.all %}
                     <div class="card">
-                        <img src="{{ car.vehicle_image.url }}" class="card-img-top small-image" alt="{{ car.brand }}">
+                        <img src="{{ car.vehicle_image.url }}" style="width: 200px; height: 150px;"
+                             alt="{{ car.brand }}">
                         <div class="card-body">
                             <h5 class="card-title">{{ car.brand }} - {{ car.model }}</h5>
-                             <a href="{% url 'car detail' pk=car.pk %}" class="btn btn-primary">Offer
-                                    Details</a>
+                            <a href="{% url 'car detail' pk=car.pk %}" class="btn btn-primary">Offer
+                                Details</a>
                         </div>
                     </div>
                 {% endfor %}
 
                 {% for van in profile.user.van_owner.all %}
                     <div class="card">
-                        <img src="{{ van.vehicle_image.url }}" class="card-img-top small-image" alt="{{ van.brand }}">
+                        <img src="{{ van.vehicle_image.url }}" style="width: 200px; height: 150px;"
+                             alt="{{ van.brand }}">
                         <div class="card-body">
                             <h5 class="card-title">{{ van.brand }} - {{ van.model }}</h5>
-                                <a href="{% url 'van detail' pk=van.pk %}" class="btn btn-primary">Offer
-                                    Details</a>
+                            <a href="{% url 'van detail' pk=van.pk %}" class="btn btn-primary">Offer
+                                Details</a>
                         </div>
                     </div>
 
@@ -73,12 +81,12 @@
 
                 {% for campers_caravans in profile.user.campers_caravans_owner.all %}
                     <div class="card">
-                        <img src="{{ campers_caravans.vehicle_image.url }}" class="card-img-top small-image"
+                        <img src="{{ campers_caravans.vehicle_image.url }}" style="width: 200px; height: 150px;"
                              alt="{{ campers_caravans.brand }}">
                         <div class="card-body">
                             <h5 class="card-title">{{ campers_caravans.brand }} - {{ campers_caravans.model }}</h5>
-                             <a href="{% url 'cam_car detail' pk=campers_caravans.pk %}" class="btn btn-primary">Offer
-                                    Details</a>
+                            <a href="{% url 'cam_car detail' pk=campers_caravans.pk %}" class="btn btn-primary">Offer
+                                Details</a>
                         </div>
                     </div>
                 {% endfor %}

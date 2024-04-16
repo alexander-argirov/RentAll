@@ -8,7 +8,8 @@
         <p><strong>Author:</strong> {{ object.author }}</p>
         <p><strong>Published:</strong> {{ object.published }}</p>
         {% if request.user.is_superuser or request.user.is_staff %}
-            <a href="{% url 'edit article view' pk=object.pk %}" class="btn btn-primary">Edit</a>
+            <a href="{% url 'edit article view' pk=object.pk %}" class="btn btn-primary">Edit Article</a>
+            <a href="{% url 'delete article view' pk=object.pk %}" class="btn btn-danger">Delete</a>
             <br>
         {% endif %}
         <a href="javascript:history.back()" class="btn btn-secondary">Back</a>
