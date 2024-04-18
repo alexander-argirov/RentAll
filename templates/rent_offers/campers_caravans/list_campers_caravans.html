@@ -18,11 +18,11 @@
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 {% for campers_caravans in object_list %}
                     <div class="col">
-                        <div class="card">
+                        <div class="card" style="width: 16rem;">
                             {% if campers_caravans.vehicle_image %}
-                                <img src="{{ campers_caravans.vehicle_image.url }}" style="width: 200px; height: 150px;" alt="Campers and Caravans Image">
+                                <img src="{{ campers_caravans.vehicle_image.url }}" style="width: 100%; height: 150px;" alt="Campers and Caravans Image">
                             {% else %}
-                                <img src="{% static 'images/camperpng.png' %}" style="width: 200px; height: 150px;" alt="Campers and Caravans Image">
+                                <img src="{% static 'images/camperpng.png' %}" style="width: 100%; height: 150px;" alt="Campers and Caravans Image">
                             {% endif %}
                             <div class="card-body">
                                 <h5 class="card-title">{{ campers_caravans.brand }} {{ car.model }}</h5>

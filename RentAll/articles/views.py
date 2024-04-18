@@ -79,8 +79,11 @@ class ArticleUpdateView(CheckUserArticlePermission, views.UpdateView):
     form_class = EditArticleForm
     success_url = reverse_lazy('common articles views')
 
-    def get_success_url(self):
-        return reverse_lazy('detail article view', kwargs={'pk': self.object.pk})
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        self.object.author = self.request.user
+        self.object.save()
+        return response
 
 
 class ArticleDeleteView(CheckUserArticlePermission, views.DeleteView):

@@ -17,11 +17,11 @@
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for van in object_list %}
                 <div class="col">
-                    <div class="card">
+                    <div class="card" style="width: 16rem;">
                         {% if van.vehicle_image %}
-                            <img src="{{ van.vehicle_image.url }}" style="width: 200px; height: 150px;" alt="Van Image">
+                            <img src="{{ van.vehicle_image.url }}" style="width: 100%; height: 150px;" alt="Van Image">
                         {% else %}
-                            <img src="{% static 'images/van.png' %}" style="width: 200px; height: 150px;" alt="Van Image">
+                            <img src="{% static 'images/van.png' %}" style="width: 100%; height: 150px;" alt="Van Image">
                         {% endif %}
                         <div class="card-body">
                             <h5 class="card-title">{{ van.brand }} {{ van.model }}</h5>
