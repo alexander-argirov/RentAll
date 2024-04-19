@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import views as auth_views, login, logout, get_user_model
 from django.contrib.auth.mixins import AccessMixin
 from django.shortcuts import redirect
@@ -5,7 +6,7 @@ from django.urls import reverse_lazy, reverse
 from django.views import generic as views
 
 
-from RentAll.accounts.forms import RentAllUserCreationForm, RentAllProfileChangePassword
+from RentAll.accounts.forms import RentAllUserCreationForm, RentAllProfileChangePassword, ProfileForm
 from RentAll.accounts.mixins import CheckForRegisteredUser, CheckForRestriction
 from RentAll.accounts.models import Profile
 
@@ -26,18 +27,22 @@ class SignInUserView(auth_views.LoginView):
     redirect_authenticated_user = True
 
 
-class RegisterUserView(CheckForRegisteredUser, views.CreateView):
+class RegisterUserView(CheckForRegisteredUser, views.FormView):
     template_name = 'accounts/register_user.html'
     form_class = RentAllUserCreationForm
 
     def form_valid(self, form):
-        result = super().form_valid(form)
-        login(self.request, form.instance)
+        email = form.cleaned_data['email']
+        if UserModel.objects.filter(email=email).exists():
+            messages.error(self.request, "A user with that email already exists.")
+            return self.form_invalid(form)
 
-        return result
+        user = form.save()
+        login(self.request, user)
+        return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('edit profile', kwargs={'pk': self.object.pk})
+        return reverse_lazy('edit profile', kwargs={'pk': self.request.user.pk})
 
 
 def signout_user(request):
@@ -56,19 +61,10 @@ class ProfileDetailsView(views.DetailView):
 class ProfileUpdateView(CheckForRestriction, views.UpdateView):
     queryset = Profile.objects.all()
     template_name = "accounts/edit_profile.html"
-    fields = ("first_name", "last_name", "date_of_birth", "phone_number", "profile_picture",)
+    form_class = ProfileForm
 
     def get_success_url(self):
-        return reverse("detail profile", kwargs={
-            "pk": self.object.pk,
-        })
-
-    def get_form(self, form_class=None):
-        form = super().get_form(form_class=form_class)
-
-        form.fields["date_of_birth"].widget.attrs["type"] = "date"
-        form.fields["date_of_birth"].label = "Birthday"
-        return form
+        return reverse("detail profile", kwargs={"pk": self.object.pk})
 
 
 class PasswordChange(auth_views.PasswordChangeView):

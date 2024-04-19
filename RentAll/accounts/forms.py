@@ -1,5 +1,8 @@
 from django import forms
 from django.contrib.auth import forms as auth_forms, get_user_model, password_validation
+
+from RentAll.accounts.models import Profile
+
 UserModel = get_user_model()
 
 
@@ -49,3 +52,12 @@ class RentAllProfileChangePassword(auth_forms.PasswordChangeForm):
     )
 
 
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ["first_name", "last_name", "phone_number", "profile_picture"]
+        widgets = {
+            "first_name": forms.TextInput(attrs={"placeholder": "Enter your first name"}),
+            "last_name": forms.TextInput(attrs={"placeholder": "Enter your last name"}),
+            "phone_number": forms.TextInput(attrs={"placeholder": "Enter your phone numb."}),
+        }

@@ -11,7 +11,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.environ.get("DEBUG", "1") == "1"
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost").split(" ")
-
+CSRF_TRUSTED_ORIGINS = [f'https://{host}' for host in ALLOWED_HOSTS]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -26,9 +26,6 @@ INSTALLED_APPS = [
     'RentAll.web',
     'RentAll.articles',
 
-
-    'crispy_forms',
-    'crispy_bootstrap5',
     'bootstrap5',
 
 ]

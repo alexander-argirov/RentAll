@@ -19,6 +19,17 @@
                                     <span class="h1 fw-bold mb-0">RentAll</span>
                                 </div>
                                 <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Register</h5>
+                                
+                                {% if form.errors %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {% for field, errors in form.errors.items %}
+                                            {% for error in errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                
                                 <form action="{% url 'register user' %}" method="post">
                                     {% csrf_token %}
                                     <div class="form-outline mb-4">

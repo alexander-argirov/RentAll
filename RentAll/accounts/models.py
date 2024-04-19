@@ -17,9 +17,6 @@ class RentAllUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
     email = models.EmailField(
         _("email address"),
         unique=True,
-        error_messages={
-            "unique": _("A user with that email already exists."),
-        },
     )
 
     date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
